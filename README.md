@@ -5,20 +5,21 @@ https://docs.google.com/document/d/1CFEuRvc5_B8Tsdku0RrUd5ymLEP1HBnnFsGkR9xLesE/
 
 ## 1. Git branchin luominen
 
-1. Luo uusi kansio
-2. Avaa GitBash kansion hakemistoon (kansion sisällä paina oikealla hiirellä -> Git Bash Here)
+1. Asenna Git (https://git-scm.com/downloads)
+2. Luo uusi kansio
+3. Avaa GitBash kansion hakemistoon (kansion sisällä paina oikealla hiirellä -> Git Bash Here)
 4. Kloonaa GitHub repository suorittamalla komento `git clone https://github.com/starxseeker/AppProg.git`
 5. Siirry hakemistossa `AppProg` kansioon kirjoittamalla `cd AppProg/`</br>
 Terminaalin pitäisi nyt näyttää jotakuinkin tältä</br>
 ![image](https://user-images.githubusercontent.com/18125997/141785619-97ec01cd-e369-4883-a6e2-deb774600095.png)
 
-7. Luo oma git branchi suorittamalla komento `git checkout -b <YOUR_BRANCH_NAME>`
-8. (master) tai (main) tilalla pitäisi nyt lukea sinun branchin nimi
+6. Luo oma git branchi suorittamalla komento `git checkout -b <YOUR_BRANCH_NAME>`
+7. (master) tai (main) tilalla pitäisi nyt lukea sinun branchin nimi
 ![image](https://user-images.githubusercontent.com/18125997/141785967-70eae469-38dd-40e1-b638-0cfc9685cb73.png)
 
-9. Puske oma branchisi GitHubiin suorittamalla komento `git push origin <YOUR_BRANCH_NAME>`
-10. Tarkista että branchisi näkyy GitHubissa (https://github.com/starxseeker/AppProg/branches)
-11. Pidä Git Bash edelleen auki, sillä sitä tarvitaan seuraavassa osiossa
+8. Puske oma branchisi GitHubiin suorittamalla komento `git push origin <YOUR_BRANCH_NAME>`
+9. Tarkista että branchisi näkyy GitHubissa (https://github.com/starxseeker/AppProg/branches)
+10. Pidä Git Bash edelleen auki, sillä sitä tarvitaan seuraavassa osiossa
 
 
 
