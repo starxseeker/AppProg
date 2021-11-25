@@ -27,14 +27,15 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+# local superuser (leevi) = test, test@test.com, test123!
 # Application definition
 
 INSTALLED_APPS = [
-    # My apps.
+    # Apps
     'games',
-
-    # Default django apps.
+    'users',
+  
+    # Default Django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
