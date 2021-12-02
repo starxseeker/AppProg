@@ -1,0 +1,32 @@
+{% extends "games/base.html" %}
+
+{% block page_header %}
+    <h1>Board games</h1>
+{% endblock page_header %}
+
+{% block content %}
+
+<ul>
+    {% for boardgame in board_games %}
+        <li>
+            <a href="{% url 'games:board_game' boardgame.id %}">{{boardgame}}</a>
+            <a href="{% url 'games:edit_board_game' boardgame.id %}">Edit board game</a>
+        </li>
+        
+    {% if user.username == boardgame.borrowed_by.username and boardgame.borrowed == True %}
+        <p>{{boardgame.borrowed_by}}</p>
+        <p><a href="{% url 'games:returns' boardgame.id %}">Return</a></p>
+    {% elif boardgame.borrowed == True %}
+        <p>{{boardgame.borrowed_by}}</p>
+    {% else %}
+        <p>The game is free to borrow.</p>
+        <p><a href="{% url 'games:borrow' boardgame.id %}">Borrow</a></p>
+    {% endif %}
+    {% empty %}
+        <li><h3>No games have been added yet.</h3></li>
+    {% endfor %}
+</ul>
+
+<h3><a href="{% url 'games:new_board_game' %}">Add a new board game</a></h3>
+
+{% endblock content %}
