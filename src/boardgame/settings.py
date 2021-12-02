@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-from django.utils.timezone import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -35,9 +34,6 @@ INSTALLED_APPS = [
     # Apps
     'games',
     'users',
-
-    # 3rd party apps
-    'axes',
   
     # Default Django apps
     'django.contrib.admin',
@@ -56,17 +52,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    # 3rd party middleware
-    'axes.middleware.AxesMiddleware'
-]
-
-AUTHENTICATION_BACKENDS = [
-    # AxesBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
-    'axes.backends.AxesBackend',
-
-    # Django ModelBackend is the default authentication backend.
-    'django.contrib.auth.backends.ModelBackend',
 ]
 
 ROOT_URLCONF = 'boardgame.urls'
@@ -143,9 +128,3 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-# Axes settings
-
-AXES_FAILURE_LIMIT = 5 # Block IP after x failed attempts
-AXES_COOLOFF_TIME = timedelta(seconds=10) # How long the IP is blocked
