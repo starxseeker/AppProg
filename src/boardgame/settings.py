@@ -149,3 +149,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AXES_FAILURE_LIMIT = 5 # Block IP after x failed attempts
 AXES_COOLOFF_TIME = timedelta(seconds=10) # How long the IP is blocked
+
+# My settings
+LOGIN_URL = 'users:login'
