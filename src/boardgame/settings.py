@@ -38,7 +38,8 @@ INSTALLED_APPS = [
 
     # 3rd party apps
     'axes',
-  
+    'bootstrap5',
+    
     # Default Django apps
     'django.contrib.admin',
     'django.contrib.auth',
@@ -63,7 +64,7 @@ MIDDLEWARE = [
 
 AUTHENTICATION_BACKENDS = [
     # AxesBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
-    'axes.backends.AxesBackend',
+    #'axes.backends.AxesBackend',
 
     # Django ModelBackend is the default authentication backend.
     'django.contrib.auth.backends.ModelBackend',

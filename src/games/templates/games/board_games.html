@@ -1,4 +1,8 @@
 {% extends "games/base.html" %}
+{% comment "" %}
+Board_games.html for AppProj teamwork
+Checked to be valid 06.12.21
+{% endcomment %}
 
 {% block page_header %}
     <h1>Board games</h1>
@@ -8,25 +12,35 @@
 
 <ul>
     {% for boardgame in board_games %}
-        <li>
-            <a href="{% url 'games:board_game' boardgame.id %}">{{boardgame}}</a>
-            <a href="{% url 'games:edit_board_game' boardgame.id %}">Edit board game</a>
-        </li>
-        
-    {% if user.username == boardgame.borrowed_by.username and boardgame.borrowed == True %}
-        <p>{{boardgame.borrowed_by}}</p>
-        <p><a href="{% url 'games:returns' boardgame.id %}">Return</a></p>
-    {% elif boardgame.borrowed == True %}
-        <p>{{boardgame.borrowed_by}}</p>
-    {% else %}
-        <p>The game is free to borrow.</p>
-        <p><a href="{% url 'games:borrow' boardgame.id %}">Borrow</a></p>
-    {% endif %}
-    {% empty %}
-        <li><h3>No games have been added yet.</h3></li>
+        <div class="card mb-3">
+            <h4 class="card-header">
+                <a href="{% url 'games:board_game' boardgame.id %}">{{boardgame}}</a>
+                <a href="{% url 'games:edit_board_game' boardgame.id %}"><button type="button" class="btn btn-primary btn-sm">Edit</button></a>
+                {% if user.username == boardgame.borrowed_by.username and boardgame.borrowed == True %}
+                    <a href="{% url 'games:returns' boardgame.id %}"><button type="button" class="btn btn-primary btn-sm">Return</button></a>
+                {% elif boardgame.borrowed == True %}
+                    <button type="button" class="btn btn-primary btn-sm" disabled>Already borrowed</button>
+                {% else %}
+                    <a href="{% url 'games:borrow' boardgame.id %}"><button type="button" class="btn btn-primary btn-sm">Borrow</button></a>
+                {% endif %}
+            </h4>
+            <h8 class="card-body">
+                <p>Game has been borrowed {{ boardgame.total_borrow_count }}
+                {% if boardgame.total_borrow_count == 1 %}
+                time
+                {% else %}
+                times
+                {% endif %}
+                </p>
+            </h8>
+        </div>
+        {% empty %}
+            <li><h3>No games have been added yet.</h3></li>
     {% endfor %}
 </ul>
 
-<h3><a href="{% url 'games:new_board_game' %}">Add a new board game</a></h3>
+<a href="{% url 'games:new_board_game' %}" class="btn btn-primary btn-lg">
+    Add a new board game</a>
+
 
 {% endblock content %}

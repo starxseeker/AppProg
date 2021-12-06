@@ -1,3 +1,9 @@
+{% extends "games/base.html" %}
+{% comment "" %}
+New_board_game.html for AppProj teamwork
+Checked to be valid 06.12.21
+{% endcomment %}
+
 {% block content %}
 
     <p>Add a new board game:</p>
@@ -5,7 +11,7 @@
     <form action="{% url 'games:new_board_game' %}" method='post'>
     {% csrf_token %}
     {{ form.as_p }}
-    <button name="submit">Add board game</button>
+    <input class="btn btn-primary" type="submit" value="Submit new board game">
     </form>
 
 {% endblock content %}
