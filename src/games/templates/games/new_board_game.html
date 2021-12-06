@@ -6,7 +6,7 @@ Checked to be valid 06.12.21
 
 {% block content %}
 
-    <p>Add a new board game:</p>
+    <p>Add a new board game</p>
 
     <form action="{% url 'games:new_board_game' %}" method='post'>
     {% csrf_token %}
