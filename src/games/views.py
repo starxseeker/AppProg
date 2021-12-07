@@ -61,6 +61,9 @@ def edit_review(request, review_id):
     review = Review.objects.get(id=review_id)
     board_game = review.board_game
 
+    if board_game.owner != request.user:
+        raise Http404
+
     if request.method != "POST":
         form = ReviewForm(instance=review)
     else:
@@ -74,6 +77,9 @@ def edit_review(request, review_id):
 def edit_board_game(request, boardgame_id):
     board_game = BoardGame.objects.get(id=boardgame_id)
 
+    if board_game.owner != request.user:
+        raise Http404
+
     if request.method != "POST":
         form = BoardGameForm(instance=board_game)
     else:
@@ -86,28 +92,41 @@ def edit_board_game(request, boardgame_id):
 
 def delete_board_game(request, boardgame_id):
     board_game = BoardGame.objects.get(id=boardgame_id)
-    reviews = board_game.review_set.all()
-    board_game.delete()
-    reviews.delete()
-    return redirect("games:board_games")
+    if board_game.owner != request.user:
+        raise Http404
+    else:
+        reviews = board_game.review_set.all()
+        board_game.delete()
+        reviews.delete()
+        return redirect("games:board_games")
 
 def delete_review(request, review_id):
     review = Review.objects.get(id=review_id)
-    review.delete()
-    return redirect("games:board_games")
+    board_game = review.board_game
+    if board_game.owner != request.user:
+        raise Http404
+    else:
+        review.delete()
+        return redirect("games:board_games")
 
 def borrow(request, boardgame_id):
     obj = BoardGame.objects.get(id=boardgame_id)
-    obj.borrowed = True
-    obj.borrowed_by = request.user
-    obj.total_borrow_count = obj.total_borrow_count + 1
-    obj.save()
-    return redirect("games:board_games")
+    if obj.owner != request.user:
+        raise Http404
+    else:
+        obj.borrowed = True
+        obj.borrowed_by = request.user
+        obj.total_borrow_count = obj.total_borrow_count + 1
+        obj.save()
+        return redirect("games:board_games")
 
 def returns(request, boardgame_id):
     obj = BoardGame.objects.get(id=boardgame_id)
-    obj.borrowed = False
-    obj.borrowed_by = request.user
-    obj.save()
-    return redirect("games:board_games")
+    if obj.owner != request.user:
+        raise Http404
+    else:
+        obj.borrowed = False
+        obj.borrowed_by = request.user
+        obj.save()
+        return redirect("games:board_games")
 

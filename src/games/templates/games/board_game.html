@@ -17,7 +17,7 @@
 
 {% if user.username == review.owner.username %}
     <p>
-    <a href="{% url 'games:edit_review' board_game.id %}">
+    <a href="{% url 'games:edit_review' review.id %}">
         Edit review</a>
     </p>
 {% endif %}

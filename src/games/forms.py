@@ -17,3 +17,8 @@ class ReviewForm(forms.ModelForm):
         model = Review
         fields = ["review", "stars"]
         labels = {"review": "Review", "stars": "Stars"}
+
+class SortBoardGames(forms.ModelForm):
+    class Meta:    
+        fields = ["name"]
+        labels = {"name": "Board game's name"}   
