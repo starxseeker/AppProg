@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404
 
 from .models import BoardGame, Review
-from .forms import BoardGameForm, ReviewForm
+from .forms import BoardGameForm, ReviewForm, SortForm
 
 # Create your views here.
 def index(request):
@@ -11,8 +11,20 @@ def index(request):
 
 @login_required
 def board_games(request):
-    board_games = BoardGame.objects.order_by('date_added')
-    context = {'board_games' : board_games}
+    form = SortForm(data=request.POST)
+    if form.is_valid():
+        sort = form.cleaned_data.get("sort")
+        if sort != "borrowed":
+            board_games = BoardGame.objects.order_by(sort)
+            context = {'form': form, 'board_games' : board_games}
+            return render(request, 'games/board_games.html', context)
+        else:
+            board_games = BoardGame.objects.filter(borrowed = False)
+            context = {'form': form, 'board_games' : board_games}
+            return render(request, 'games/board_games.html', context)
+    
+    board_games = BoardGame.objects.order_by('name')
+    context = {'form': form, 'board_games' : board_games}
     return render(request, 'games/board_games.html', context)
 
 @login_required

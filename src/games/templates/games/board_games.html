@@ -6,6 +6,12 @@
 
 {% block content %}
 
+<form action="{% url 'games:board_games' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button name="submit">Sort</button>
+</form>
+
 <ul>
     {% for boardgame in board_games %}
         <li>
