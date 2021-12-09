@@ -38,7 +38,8 @@ INSTALLED_APPS = [
 
     # 3rd party apps
     'axes',
-  
+    'bootstrap5',
+    
     # Default Django apps
     'django.contrib.admin',
     'django.contrib.auth',

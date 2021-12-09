@@ -1,10 +1,26 @@
-{% extends "games/base.html" %}
+{% extends 'games/base.html' %}
 
-{% block content %}
-<html>
-    <head</head>
-    <body>
-        <p>It works!</p>
-    </body>
-</html>
-{% endblock content %}
+{% block page_header %}
+
+    <div class="jumbotron">
+        <h1 class="display-3">4X the fun!</h1>
+        <p class="lead">4X the fun is the new boardgame site, where you
+            can find the newest reviews for the hottest current and past 
+            boardgames! You can also borrow games from other enthusiasts.
+        </p>
+        {% if user.is_authenticated %}
+            <p class="lead">Go browse some games!</p>
+            <div class="col text-center">
+                <a href="{% url 'games:board_games' %}" class="btn btn-primary btn-lg">
+                    Browse!</a>
+            </div>
+        {% else %}
+            <p class="lead">Register now to join this exclusive group!</p>
+            <div class="col text-center">
+                <a href="{% url 'users:register' %}" class="btn btn-primary btn-lg">
+                    Register now!</a>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock page_header %}

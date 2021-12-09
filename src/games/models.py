@@ -23,7 +23,7 @@ class BoardGame(models.Model):
     date_modified = models.DateTimeField(auto_now_add = True)
 
     def __str__(self):
-        return f'{self.name}, {self.total_borrow_count}'
+        return f'{self.name}'
 
 class Review(models.Model):
     board_game = models.ForeignKey(BoardGame, on_delete=models.CASCADE, null=True)

@@ -14,14 +14,4 @@ class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = ["review", "stars"]
-        labels = {"review": "Review", "stars": "Stars"}
-
-SORT_CHOICES= [
-    ('name', 'name'),
-    ('genre', 'genre'),
-    ('-total_borrow_count', 'borrow count'),
-    ('borrowed', 'availability'),
-    ]
-
-class SortForm(forms.Form):
-    sort = forms.CharField(label='Sort by', widget=forms.Select(choices=SORT_CHOICES), initial="name")
+        labels = {"review": "Review", "stars": "Stars(0-5)"}
