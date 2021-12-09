@@ -1,0 +1,11 @@
+{% block content %}
+
+    <p>Review the board game:</p><p><a href="{% url 'games:board_game' boardgame.id %}">{{ boardgame }}</a></p>
+
+    <form action="{% url 'games:new_review' boardgame.id %}" method='post'>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button name="submit">Review</button>
+    </form>
+
+{% endblock content %}

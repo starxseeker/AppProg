@@ -1,0 +1,10 @@
+<p>
+    <a href="{% url 'games:board_games' %}">Board games</a> -
+    {% if user.is_authenticated %}
+        <a href="{% url 'users:logout' %}">Logout</a>
+    {% else %}
+        <a href="{% url 'users:register' %}">Register</a> - 
+        <a href="{% url 'users:login' %}">Log in</a>
+    {% endif %}
+</p>
+{% block content %}{% endblock content %}

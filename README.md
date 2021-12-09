@@ -1,6 +1,13 @@
 App requirements
 https://docs.google.com/document/d/1CFEuRvc5_B8Tsdku0RrUd5ymLEP1HBnnFsGkR9xLesE/edit?usp=sharing
 
+# GITIN KÄYTTÖOHJEET
+
+**HUOM: Voit myös käyttää VSCoden sisäistä "Source Control" toimintoa näihin.**
+1. Lisää muutokset komennolla `git add .`
+2. Committaa muutokset `git commit -m "<MUUTOKSIA_KUVAILEVA_TEKSTI_TÄHÄN>"`
+3. Puske commit omaan branchiin `git push origin <BRANCHIN_NIMI>`
+
 # ASENNUSOHJEET
 
 ## 1. Git branchin luominen
