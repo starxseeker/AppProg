@@ -5,7 +5,7 @@ from django.http import Http404
 from .models import BoardGame, Review
 from .forms import BoardGameForm, ReviewForm
 
-# Create your views here.
+# Viivulit :D
 def index(request):
     return render(request, 'games/index.html')
 
@@ -110,4 +110,3 @@ def returns(request, boardgame_id):
     obj.borrowed_by = request.user
     obj.save()
     return redirect("games:board_games")
-
