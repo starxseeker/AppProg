@@ -13,12 +13,14 @@
         <p>{{ review.date_added|date:'M d, Y H:i' }}</p>
         <p>{{ review.review|linebreaks }}</p>
         <p>{{ review.stars|linebreaks }}</p>
-        <p>
-        <a href="{% url 'games:edit_review' board_game.id %}">
-            Edit review</a>
-        </p>
     </li>
 
+{% if user.username == review.owner.username %}
+    <p>
+    <a href="{% url 'games:edit_review' review.id %}">
+        Edit review</a>
+    </p>
+{% endif %}
 {% empty %}
     <li>There are no entries for this topic yet.</li>
 {% endfor %}

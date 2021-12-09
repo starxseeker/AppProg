@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404
 
 from .models import BoardGame, Review
-from .forms import BoardGameForm, ReviewForm
+from .forms import BoardGameForm, ReviewForm, SortForm
 
 # Viivulit :D
 def index(request):
@@ -11,8 +11,20 @@ def index(request):
 
 @login_required
 def board_games(request):
-    board_games = BoardGame.objects.order_by('date_added')
-    context = {'board_games' : board_games}
+    form = SortForm(data=request.POST)
+    if form.is_valid():
+        sort = form.cleaned_data.get("sort")
+        if sort != "borrowed":
+            board_games = BoardGame.objects.order_by(sort)
+            context = {'form': form, 'board_games' : board_games}
+            return render(request, 'games/board_games.html', context)
+        else:
+            board_games = BoardGame.objects.filter(borrowed = False)
+            context = {'form': form, 'board_games' : board_games}
+            return render(request, 'games/board_games.html', context)
+    
+    board_games = BoardGame.objects.order_by('name')
+    context = {'form': form, 'board_games' : board_games}
     return render(request, 'games/board_games.html', context)
 
 @login_required
@@ -61,6 +73,9 @@ def edit_review(request, review_id):
     review = Review.objects.get(id=review_id)
     board_game = review.board_game
 
+    if board_game.owner != request.user:
+        raise Http404
+
     if request.method != "POST":
         form = ReviewForm(instance=review)
     else:
@@ -74,6 +89,9 @@ def edit_review(request, review_id):
 def edit_board_game(request, boardgame_id):
     board_game = BoardGame.objects.get(id=boardgame_id)
 
+    if board_game.owner != request.user:
+        raise Http404
+
     if request.method != "POST":
         form = BoardGameForm(instance=board_game)
     else:
@@ -86,27 +104,41 @@ def edit_board_game(request, boardgame_id):
 
 def delete_board_game(request, boardgame_id):
     board_game = BoardGame.objects.get(id=boardgame_id)
-    reviews = board_game.review_set.all()
-    board_game.delete()
-    reviews.delete()
-    return redirect("games:board_games")
+    if board_game.owner != request.user:
+        raise Http404
+    else:
+        reviews = board_game.review_set.all()
+        board_game.delete()
+        reviews.delete()
+        return redirect("games:board_games")
 
 def delete_review(request, review_id):
     review = Review.objects.get(id=review_id)
-    review.delete()
-    return redirect("games:board_games")
+    board_game = review.board_game
+    if board_game.owner != request.user:
+        raise Http404
+    else:
+        review.delete()
+        return redirect("games:board_games")
 
 def borrow(request, boardgame_id):
     obj = BoardGame.objects.get(id=boardgame_id)
-    obj.borrowed = True
-    obj.borrowed_by = request.user
-    obj.total_borrow_count = obj.total_borrow_count + 1
-    obj.save()
-    return redirect("games:board_games")
+    if obj.owner != request.user:
+        raise Http404
+    else:
+        obj.borrowed = True
+        obj.borrowed_by = request.user
+        obj.total_borrow_count = obj.total_borrow_count + 1
+        obj.save()
+        return redirect("games:board_games")
 
 def returns(request, boardgame_id):
     obj = BoardGame.objects.get(id=boardgame_id)
-    obj.borrowed = False
-    obj.borrowed_by = request.user
-    obj.save()
-    return redirect("games:board_games")
+    if obj.owner != request.user:
+        raise Http404
+    else:
+        obj.borrowed = False
+        obj.borrowed_by = request.user
+        obj.save()
+        return redirect("games:board_games")
+
