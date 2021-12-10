@@ -64,7 +64,7 @@ MIDDLEWARE = [
 
 AUTHENTICATION_BACKENDS = [
     # AxesBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
-    #'axes.backends.AxesBackend',
+    'axes.backends.AxesBackend',
 
     # Django ModelBackend is the default authentication backend.
     'django.contrib.auth.backends.ModelBackend',
@@ -150,6 +150,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AXES_FAILURE_LIMIT = 5 # Block IP after x failed attempts
 AXES_COOLOFF_TIME = timedelta(seconds=10) # How long the IP is blocked
+
+AXES_LOCKOUT_CALLABLE = "users.views.lockout"
 
 # My settings
 LOGIN_URL = 'users:login'
