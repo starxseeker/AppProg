@@ -1,11 +1,17 @@
+{% extends "games/base.html" %}
+{% comment "" %}
+New_review.html for AppProj teamwork
+Checked to be valid 06.12.21
+{% endcomment %}
+
 {% block content %}
 
-    <p>Review the board game:</p><p><a href="{% url 'games:board_game' boardgame.id %}">{{ boardgame }}</a></p>
+    <p>Writing review for: {{ boardgame }}</p>
 
     <form action="{% url 'games:new_review' boardgame.id %}" method='post'>
         {% csrf_token %}
         {{ form.as_p }}
-        <button name="submit">Review</button>
+        <input class="btn btn-primary" type="submit" value="Submit new review">
     </form>
 
 {% endblock content %}

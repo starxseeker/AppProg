@@ -38,7 +38,8 @@ INSTALLED_APPS = [
 
     # 3rd party apps
     'axes',
-  
+    'bootstrap5',
+    
     # Default Django apps
     'django.contrib.admin',
     'django.contrib.auth',
@@ -149,3 +150,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AXES_FAILURE_LIMIT = 5 # Block IP after x failed attempts
 AXES_COOLOFF_TIME = timedelta(seconds=10) # How long the IP is blocked
+
+AXES_LOCKOUT_CALLABLE = "users.views.lockout"
+
+# My settings
+LOGIN_URL = 'users:login'
