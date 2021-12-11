@@ -21,7 +21,9 @@ Checked to be valid 06.12.21
         <div class="card-header">
             <h4>Reviewed by {{ review.owner }},</h4>
             <h10>on {{ review.date_added|date:'d.m.Y, H:i' }}</h10>
-            <a href="{% url 'games:edit_review' review.id %}"><button type="button" class="btn btn-primary btn-sm">Edit review</button></a>
+            {% if user.username == review.owner.username %}
+                <a href="{% url 'games:edit_review' review.id %}"><button type="button" class="btn btn-primary btn-sm">Edit review</button></a>
+            {% endif %}
         </div>
         <h8 class="card-body">
             <p>{{ review.review|linebreaks }}</p>
@@ -33,12 +35,6 @@ Checked to be valid 06.12.21
         </h8>
     </div>
 
-{% if user.username == review.owner.username %}
-    <p>
-    <a href="{% url 'games:edit_review' review.id %}">
-        Edit review</a>
-    </p>
-{% endif %}
 {% empty %}
     <li>There are no entries for this topic yet.</li>
 {% endfor %}
