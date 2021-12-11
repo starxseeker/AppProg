@@ -22,4 +22,4 @@ def register(request):
     return render(request, "registration/register.html", context)
 
 def lockout(request, credentials, *args, **kwargs):
-    return render(request, "error/lockout.html", {})
+    return render(request, "error/lockout.html", {}) # Locked out page (when user has too many failed login attempts)

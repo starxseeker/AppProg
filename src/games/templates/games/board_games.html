@@ -21,7 +21,9 @@ Checked to be valid 06.12.21
         <div class="card mb-3">
             <h4 class="card-header">
                 <a href="{% url 'games:board_game' boardgame.id %}">{{boardgame}}</a>
-                <a href="{% url 'games:edit_board_game' boardgame.id %}"><button type="button" class="btn btn-primary btn-sm">Edit</button></a>
+                {% if user.username == boardgame.owner.username %}
+                    <a href="{% url 'games:edit_board_game' boardgame.id %}"><button type="button" class="btn btn-primary btn-sm">Edit</button></a>
+                {% endif %}
                 {% if user.username == boardgame.borrowed_by.username and boardgame.borrowed == True %}
                     <a href="{% url 'games:returns' boardgame.id %}"><button type="button" class="btn btn-primary btn-sm">Return</button></a>
                 {% elif boardgame.borrowed == True %}
