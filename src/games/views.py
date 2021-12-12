@@ -14,12 +14,16 @@ def board_games(request):
     form = SortForm(data=request.POST)
     if form.is_valid():
         sort = form.cleaned_data.get("sort")
-        if sort != "borrowed":
+        if sort == "borrowed":
+            board_games = BoardGame.objects.filter(borrowed = False)
+            context = {'form': form, 'board_games' : board_games}
+            return render(request, 'games/board_games.html', context)
+        elif sort == "-name" or sort == "name" or sort == "-total_borrow_count":
             board_games = BoardGame.objects.order_by(sort)
             context = {'form': form, 'board_games' : board_games}
             return render(request, 'games/board_games.html', context)
         else:
-            board_games = BoardGame.objects.filter(borrowed = False)
+            board_games = BoardGame.objects.filter(genre = sort)
             context = {'form': form, 'board_games' : board_games}
             return render(request, 'games/board_games.html', context)
     
@@ -36,7 +40,6 @@ def board_game(request, boardgame_id):
 
 @login_required
 def new_board_game(request):
-    """Add a new board game."""
     if request.method != 'POST':
         form = BoardGameForm()
     else:
@@ -53,8 +56,7 @@ def new_board_game(request):
 
 @login_required
 def new_review(request, boardgame_id):
-    boardgame = BoardGame.objects.get(id=boardgame_id)
-    
+    boardgame = BoardGame.objects.get(id=boardgame_id)   
     if request.method != "POST":
         form = ReviewForm()
     else:
@@ -72,10 +74,8 @@ def new_review(request, boardgame_id):
 def edit_review(request, review_id):
     review = Review.objects.get(id=review_id)
     board_game = review.board_game
-
-    if board_game.owner != request.user:
+    if review.owner != request.user:
         raise Http404
-
     if request.method != "POST":
         form = ReviewForm(instance=review)
     else:
@@ -88,10 +88,8 @@ def edit_review(request, review_id):
 
 def edit_board_game(request, boardgame_id):
     board_game = BoardGame.objects.get(id=boardgame_id)
-
     if board_game.owner != request.user:
         raise Http404
-
     if request.method != "POST":
         form = BoardGameForm(instance=board_game)
     else:
@@ -114,8 +112,7 @@ def delete_board_game(request, boardgame_id):
 
 def delete_review(request, review_id):
     review = Review.objects.get(id=review_id)
-    board_game = review.board_game
-    if board_game.owner != request.user:
+    if review.owner != request.user:
         raise Http404
     else:
         review.delete()
@@ -123,9 +120,6 @@ def delete_review(request, review_id):
 
 def borrow(request, boardgame_id):
     obj = BoardGame.objects.get(id=boardgame_id)
-    # if obj.owner != request.user: # ??? mikä tämän idea on?
-    #     raise Http404
-    # else:
     obj.borrowed = True
     obj.borrowed_by = request.user
     obj.total_borrow_count = obj.total_borrow_count + 1
@@ -134,9 +128,6 @@ def borrow(request, boardgame_id):
 
 def returns(request, boardgame_id):
     obj = BoardGame.objects.get(id=boardgame_id)
-    # if obj.owner != request.user: # ??? mikä tämän idea on?
-    #     raise Http404
-    # else:
     obj.borrowed = False
     obj.borrowed_by = request.user
     obj.save()
