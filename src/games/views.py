@@ -14,12 +14,16 @@ def board_games(request):
     form = SortForm(data=request.POST)
     if form.is_valid():
         sort = form.cleaned_data.get("sort")
-        if sort != "borrowed":
+        if sort == "borrowed":
+            board_games = BoardGame.objects.filter(borrowed = False)
+            context = {'form': form, 'board_games' : board_games}
+            return render(request, 'games/board_games.html', context)
+        elif sort == "-name" or sort == "name" or sort == "-total_borrow_count":
             board_games = BoardGame.objects.order_by(sort)
             context = {'form': form, 'board_games' : board_games}
             return render(request, 'games/board_games.html', context)
         else:
-            board_games = BoardGame.objects.filter(borrowed = False)
+            board_games = BoardGame.objects.filter(genre = sort)
             context = {'form': form, 'board_games' : board_games}
             return render(request, 'games/board_games.html', context)
     
