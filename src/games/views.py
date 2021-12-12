@@ -127,9 +127,6 @@ def delete_review(request, review_id):
 
 def borrow(request, boardgame_id):
     obj = BoardGame.objects.get(id=boardgame_id)
-    # if obj.owner != request.user: # ??? mikä tämän idea on?
-    #     raise Http404
-    # else:
     obj.borrowed = True
     obj.borrowed_by = request.user
     obj.total_borrow_count = obj.total_borrow_count + 1
@@ -138,9 +135,6 @@ def borrow(request, boardgame_id):
 
 def returns(request, boardgame_id):
     obj = BoardGame.objects.get(id=boardgame_id)
-    # if obj.owner != request.user: # ??? mikä tämän idea on?
-    #     raise Http404
-    # else:
     obj.borrowed = False
     obj.borrowed_by = request.user
     obj.save()
