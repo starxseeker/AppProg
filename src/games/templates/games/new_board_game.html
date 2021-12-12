@@ -1,17 +1,16 @@
 {% extends "games/base.html" %}
-{% comment "" %}
-New_board_game.html for AppProj teamwork
-Checked to be valid 06.12.21
-{% endcomment %}
+{% load bootstrap5 %}
+
+{% block page_header %}
+    <h2>Add a new board game</h2>
+{% endblock page_header %}
 
 {% block content %}
-
-    <p>Add a new board game</p>
-
-    <form action="{% url 'games:new_board_game' %}" method='post'>
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input class="btn btn-primary" type="submit" value="Submit new board game">
+    <form action="{% url 'games:new_board_game' %}" method='post' class="form">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+        <button name="submit" class="btn btn-primary">Submit review</button>
+        {% endbuttons %}
     </form>
-
 {% endblock content %}

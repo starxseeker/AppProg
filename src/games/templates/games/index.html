@@ -2,7 +2,7 @@
 
 {% block page_header %}
 
-    <div class="jumbotron">
+    <div class="jumbotron text-center">
         <h1 class="display-3">4X the fun!</h1>
         <p class="lead">4X the fun is the new boardgame site, where you
             can find the newest reviews for the hottest current and past 
@@ -16,9 +16,20 @@
             </div>
         {% else %}
             <p class="lead">Register now to join this exclusive group!</p>
-            <div class="col text-center">
-                <a href="{% url 'users:register' %}" class="btn btn-primary btn-lg">
-                    Register now!</a>
+            <div class="row text-center">
+                <div class="col"></div>
+                <div class="col text-end">
+                    <a href="{% url 'users:register' %}" class="btn btn-primary btn-lg">
+                        Register now!</a>
+                </div>
+                <div class="col">
+                    <p class="lead"> or </p>
+                </div>
+                <div class="col text-start">
+                    <a href="{% url 'users:login' %}" class="btn btn-primary btn-lg">
+                        Log in!</a>
+                </div>
+                <div class="col"></div>
             </div>
         {% endif %}
     </div>

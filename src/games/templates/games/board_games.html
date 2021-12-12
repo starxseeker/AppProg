@@ -1,8 +1,5 @@
 {% extends "games/base.html" %}
-{% comment "" %}
-Board_games.html for AppProj teamwork
-Checked to be valid 06.12.21
-{% endcomment %}
+{% load bootstrap5 %}
 
 {% block page_header %}
     <h1>Board games</h1>
@@ -10,11 +7,27 @@ Checked to be valid 06.12.21
 
 {% block content %}
 
-<form action="{% url 'games:board_games' %}" method="post">
+<style>
+    .form-select {
+        width: 25%;
+    }
+</style>
+
+<form action="{% url 'games:board_games' %}" method='post' class="form">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+    <button name="submit" class="btn btn-primary">Sort games</button>
+    {% endbuttons %}
+</form>
+
+
+{% comment %} <form action="{% url 'games:board_games' %}" method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button name="submit">Sort</button>
-</form>
+    <button name="submit" class="btn btn-primary">Sort</button>
+</form> {% endcomment %}
+
 
 <ul>
     {% for boardgame in board_games %}
@@ -31,6 +44,9 @@ Checked to be valid 06.12.21
                 {% else %}
                     <a href="{% url 'games:borrow' boardgame.id %}"><button type="button" class="btn btn-primary btn-sm">Borrow</button></a>
                 {% endif %}
+
+                    <h8> {{ board_games.genre }} </h8>
+
             </h4>
             <h8 class="card-body">
                 <p>Game has been borrowed {{ boardgame.total_borrow_count }}
@@ -43,7 +59,7 @@ Checked to be valid 06.12.21
             </h8>
         </div>
         {% empty %}
-            <li><h3>No games have been added yet.</h3></li>
+            <h3>No games found.</h3>
     {% endfor %}
 </ul>
 

@@ -17,11 +17,17 @@ class ReviewForm(forms.ModelForm):
         labels = {"review": "Review", "stars": "Stars"}
 
 SORT_CHOICES= [
-    ('name', 'name'),
-    ('genre', 'genre'),
-    ('-total_borrow_count', 'borrow count'),
-    ('borrowed', 'availability'),
+    ('name', 'Name A-Z'),
+    ('-name', 'Name Z-A'),
+    ('-total_borrow_count', 'Borrow count'),
+    ('borrowed', 'Availability'),
     ]
 
+count = Genre.objects.count()
+obj = Genre.objects.all()
+for n in range(count):
+    test = Genre.objects.get(genre=obj[n])
+    SORT_CHOICES.append((test.id, obj[n]))
+
 class SortForm(forms.Form):
-    sort = forms.CharField(label='Sort by', widget=forms.Select(choices=SORT_CHOICES), initial="name")
+    sort = forms.CharField(label='Sort by', required=False, widget=forms.Select(choices=SORT_CHOICES))
