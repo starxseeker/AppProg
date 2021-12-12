@@ -5,7 +5,7 @@ from django.http import Http404
 from .models import BoardGame, Review
 from .forms import BoardGameForm, ReviewForm, SortForm
 
-# Create your views here.
+# Viivulit :D
 def index(request):
     return render(request, 'games/index.html')
 
@@ -127,22 +127,22 @@ def delete_review(request, review_id):
 
 def borrow(request, boardgame_id):
     obj = BoardGame.objects.get(id=boardgame_id)
-    if obj.owner != request.user:
-        raise Http404
-    else:
-        obj.borrowed = True
-        obj.borrowed_by = request.user
-        obj.total_borrow_count = obj.total_borrow_count + 1
-        obj.save()
-        return redirect("games:board_games")
+    # if obj.owner != request.user: # ??? mikä tämän idea on?
+    #     raise Http404
+    # else:
+    obj.borrowed = True
+    obj.borrowed_by = request.user
+    obj.total_borrow_count = obj.total_borrow_count + 1
+    obj.save()
+    return redirect("games:board_games")
 
 def returns(request, boardgame_id):
     obj = BoardGame.objects.get(id=boardgame_id)
-    if obj.owner != request.user:
-        raise Http404
-    else:
-        obj.borrowed = False
-        obj.borrowed_by = request.user
-        obj.save()
-        return redirect("games:board_games")
+    # if obj.owner != request.user: # ??? mikä tämän idea on?
+    #     raise Http404
+    # else:
+    obj.borrowed = False
+    obj.borrowed_by = request.user
+    obj.save()
+    return redirect("games:board_games")
 
