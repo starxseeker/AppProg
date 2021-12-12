@@ -7,11 +7,17 @@
 
 {% block content %}
 
+<style>
+    .form-select {
+        width: 25%;
+    }
+</style>
+
 <form action="{% url 'games:board_games' %}" method='post' class="form">
     {% csrf_token %}
     {% bootstrap_form form %}
     {% buttons %}
-    <button name="submit" class="btn btn-primary">Sort</button>
+    <button name="submit" class="btn btn-primary">Sort games</button>
     {% endbuttons %}
 </form>
 
@@ -53,7 +59,7 @@
             </h8>
         </div>
         {% empty %}
-            <h3>No games have been added yet.</h3>
+            <h3>No games found.</h3>
     {% endfor %}
 </ul>
 
