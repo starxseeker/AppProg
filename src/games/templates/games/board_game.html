@@ -1,18 +1,17 @@
 {% extends "games/base.html" %}
-{% comment "" %}
-Board_game.html for AppProj teamwork
-Checked to be valid 06.12.21
-{% endcomment %}
+{% load bootstrap5 %}
 
 {% block page_header %}
     <h3>{{ board_game }}</h3>
+    <p><small>Owner: {{ board_game.owner.username }}</small><p>
 {% endblock page_header %}
 
 {% block content %}
 
-<a href="{% url 'games:new_review' board_game.id%}" class="btn btn-primary btn-lg">
-    Add a new review</a>
-    <div class="mb-3"></div>
+<a href="{% url 'games:new_review' board_game.id %}">
+    <button type="button" class="btn btn-primary btn-lg">Add new review
+</button></a>
+<div class="mb-1"></div>
 
 
 
@@ -36,7 +35,7 @@ Checked to be valid 06.12.21
     </div>
 
 {% empty %}
-    <li>There are no entries for this topic yet.</li>
+    <h6>There are no reviews for this game yet.</h6>
 {% endfor %}
 
 
