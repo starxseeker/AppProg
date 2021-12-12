@@ -40,7 +40,6 @@ def board_game(request, boardgame_id):
 
 @login_required
 def new_board_game(request):
-    """Add a new board game."""
     if request.method != 'POST':
         form = BoardGameForm()
     else:
@@ -57,8 +56,7 @@ def new_board_game(request):
 
 @login_required
 def new_review(request, boardgame_id):
-    boardgame = BoardGame.objects.get(id=boardgame_id)
-    
+    boardgame = BoardGame.objects.get(id=boardgame_id)   
     if request.method != "POST":
         form = ReviewForm()
     else:
@@ -76,10 +74,8 @@ def new_review(request, boardgame_id):
 def edit_review(request, review_id):
     review = Review.objects.get(id=review_id)
     board_game = review.board_game
-
-    if board_game.owner != request.user:
+    if review.owner != request.user:
         raise Http404
-
     if request.method != "POST":
         form = ReviewForm(instance=review)
     else:
@@ -92,10 +88,8 @@ def edit_review(request, review_id):
 
 def edit_board_game(request, boardgame_id):
     board_game = BoardGame.objects.get(id=boardgame_id)
-
     if board_game.owner != request.user:
         raise Http404
-
     if request.method != "POST":
         form = BoardGameForm(instance=board_game)
     else:
@@ -118,8 +112,7 @@ def delete_board_game(request, boardgame_id):
 
 def delete_review(request, review_id):
     review = Review.objects.get(id=review_id)
-    board_game = review.board_game
-    if board_game.owner != request.user:
+    if review.owner != request.user:
         raise Http404
     else:
         review.delete()
